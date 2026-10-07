@@ -1,0 +1,19 @@
+{
+  "name": "dotcraft",
+  "owner": {
+    "name": "Emanuele Bartolesi",
+    "url": "https://github.com/kasuken"
+  },
+  "metadata": {
+    "description": "dotcraft: skills and agents for .NET, Blazor and MudBlazor product development."
+  },
+  "plugins": [
+    {
+      "name": "dotcraft",
+      "source": "./",
+      "description": "Daily skills and agents for building .NET 10 products with Blazor and MudBlazor: C#, EF Core, testing, accessible UI, motion, design systems, Stripe and GDPR.",
+      "version": "1.0.0",
+      "category": "development"
+    }
+  ]
+}

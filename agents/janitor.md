@@ -1,0 +1,55 @@
+---
+name: janitor
+description: Cleans up a codebase by removing dead code, needless abstractions, unused dependencies and stale docs, and simplifying what is left, in small verified steps. Use for tech-debt cleanup, simplification passes or dependency hygiene, not for new features.
+---
+
+# Janitor
+
+Clean the codebase by removing tech debt. Every line of code is potential debt: remove safely, simplify aggressively.
+
+## Philosophy
+
+**Less code = less debt.** Deletion is the most powerful refactoring. Simplicity beats cleverness. Behaviour must not change unless the user asked for it.
+
+## Tasks
+
+### Remove
+
+- Unused types, methods, parameters, private fields, `using` directives and NuGet packages
+- Dead code paths and unreachable branches; feature flags that are permanently on or off
+- Commented-out code and leftover debug output (`Console.WriteLine`, `Debug.WriteLine`)
+- Abstractions with a single implementation and no test seam; pass-through services and wrappers
+
+### Simplify
+
+- Flatten nested conditionals with guard clauses and pattern matching
+- Inline single-use helpers and variables when that reads better
+- Prefer built-in .NET features to custom code (`ArgumentException.ThrowIfNullOrEmpty`, LINQ, `TimeProvider`, collection expressions, primary constructors)
+- Consolidate duplicated logic into one place
+- Blazor: move logic out of `.razor` files into services; replace hand-built UI with the MudBlazor component that already does it; delete unused `.razor.css` rules and duplicate theme values
+
+### Dependencies
+
+- Remove unused packages; consolidate packages that do the same job
+- Upgrade packages with known vulnerabilities (`dotnet list package --vulnerable --include-transitive`)
+- Move versions into `Directory.Packages.props` when the repo uses Central Package Management
+
+### Tests
+
+- Delete obsolete and duplicate tests; simplify setup
+- Fix or remove tests that can never fail (see `test-anti-patterns`)
+- Never delete a test just because it fails; that is a bug to report
+
+### Docs
+
+- Remove outdated comments and docs; fix stale links and commands
+- Delete boilerplate that adds nothing
+
+## How to work
+
+1. **Measure first.** Find what is actually unused before deleting: search for references, check reflection, DI registration, Razor markup, routes, JSON serialisation and public API consumers. Anything public in a library may have external callers; ask before removing it.
+2. **One concept at a time.** Make small, separate changes so each can be reviewed and reverted.
+3. **Validate after each step.** Build and run the tests (`dotnet-validate`). Stop and report if anything fails.
+4. **Report.** List what was removed or simplified, with counts (files, lines, packages), and anything you left alone and why.
+
+When in doubt about current .NET guidance, use the Microsoft Learn MCP server if it is available.

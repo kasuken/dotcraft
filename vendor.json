@@ -1,0 +1,178 @@
+{
+  "$comment": "Third-party content in dotcraft. 'vendored' skills are copied verbatim from a pinned commit by scripts/Sync-Vendored.ps1 and must not be edited by hand. 'adapted' items started from upstream and were changed for dotcraft; the sync script never touches them. 'companions' are installed separately (see README).",
+  "vendored": [
+    {
+      "repo": "dotnet/skills",
+      "ref": "a660de83c2f9cad071a5d568f7d77041ccd07059",
+      "license": "MIT",
+      "skills": [
+        { "name": "author-component", "path": "plugins/dotnet-blazor/skills/author-component" },
+        { "name": "collect-user-input", "path": "plugins/dotnet-blazor/skills/collect-user-input" },
+        { "name": "support-prerendering", "path": "plugins/dotnet-blazor/skills/support-prerendering" },
+        { "name": "configure-auth", "path": "plugins/dotnet-blazor/skills/configure-auth" },
+        { "name": "use-js-interop", "path": "plugins/dotnet-blazor/skills/use-js-interop" },
+        { "name": "coordinate-components", "path": "plugins/dotnet-blazor/skills/coordinate-components" },
+        { "name": "fetch-and-send-data", "path": "plugins/dotnet-blazor/skills/fetch-and-send-data" },
+        { "name": "plan-ui-change", "path": "plugins/dotnet-blazor/skills/plan-ui-change" },
+        { "name": "create-blazor-project", "path": "plugins/dotnet-blazor/skills/create-blazor-project" },
+        { "name": "optimizing-ef-core-queries", "path": "plugins/dotnet-data/skills/optimizing-ef-core-queries" },
+        { "name": "migrate-xunit-to-xunit-v3", "path": "plugins/dotnet-test-migration/skills/migrate-xunit-to-xunit-v3" },
+        { "name": "run-tests", "path": "plugins/dotnet-test/skills/run-tests" },
+        { "name": "test-anti-patterns", "path": "plugins/dotnet-test/skills/test-anti-patterns" },
+        { "name": "dotnet-webapi", "path": "plugins/dotnet-aspnetcore/skills/dotnet-webapi" }
+      ]
+    },
+    {
+      "repo": "aaronontheweb/dotnet-skills",
+      "ref": "e426ed93a9f3215cd21b277fdfa6bfccd3457945",
+      "license": "MIT",
+      "skills": [
+        { "name": "modern-csharp-coding-standards", "path": "skills/csharp-coding-standards" },
+        { "name": "efcore-patterns", "path": "skills/efcore-patterns" },
+        { "name": "playwright-blazor-testing", "path": "skills/playwright-blazor" },
+        { "name": "testcontainers-integration-tests", "path": "skills/testcontainers" },
+        { "name": "dotnet-slopwatch", "path": "skills/slopwatch" }
+      ]
+    },
+    {
+      "repo": "duendesoftware/duende-skills",
+      "ref": "fb32edc51982bf1c600e21ba91df32c903098a9c",
+      "license": "MIT",
+      "skills": [
+        { "name": "aspnetcore-authentication", "path": "skills/aspnetcore-authentication" },
+        { "name": "aspnetcore-authorization", "path": "skills/aspnetcore-authorization" }
+      ]
+    },
+    {
+      "repo": "microsoft/aspire-skills",
+      "ref": "da1230cabd8bb9908b31d369afa5b93673bfc897",
+      "license": "MIT",
+      "skills": [
+        { "name": "aspire", "path": "skills/aspire" }
+      ]
+    },
+    {
+      "repo": "stripe/ai",
+      "ref": "9b91884e43839591abd6ee3c70667b2e71d5e687",
+      "license": "MIT",
+      "skills": [
+        { "name": "stripe-best-practices", "path": "skills/stripe-best-practices" }
+      ]
+    },
+    {
+      "repo": "getsentry/skills",
+      "ref": "d18b7aa8ba878354e5c348310230e652f7690f9c",
+      "license": "Apache-2.0",
+      "skills": [
+        { "name": "gha-security-review", "path": "skills/gha-security-review" }
+      ]
+    },
+    {
+      "repo": "markheydon/github-workflows",
+      "ref": "6df4c05b3c27d13fe45c955cdf123f9bc2bc6590",
+      "license": "MIT",
+      "skills": [
+        { "name": "mudblazor", "path": "skills/mudblazor" }
+      ]
+    },
+    {
+      "repo": "vercel-labs/agent-skills",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "license": "MIT",
+      "licenseNote": "The repository has no LICENSE file; its README states the licence is MIT.",
+      "skills": [
+        { "name": "web-design-guidelines", "path": "skills/web-design-guidelines" }
+      ]
+    },
+    {
+      "repo": "jakubkrehel/skills",
+      "ref": "d574cc8a576dc24256ad38268b8d03d86724a1b3",
+      "license": "MIT",
+      "skills": [
+        { "name": "better-accessibility", "path": "skills/better-accessibility" },
+        { "name": "better-typography", "path": "skills/better-typography" },
+        { "name": "better-colors", "path": "skills/better-colors" },
+        { "name": "better-layout", "path": "skills/better-layout" }
+      ]
+    },
+    {
+      "repo": "addyosmani/web-quality-skills",
+      "ref": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "license": "MIT",
+      "skills": [
+        { "name": "accessibility", "path": "skills/accessibility" }
+      ]
+    },
+    {
+      "repo": "ibelick/ui-skills",
+      "ref": "587ea305b948ad34f0c2d5c2ea4211d428f66ed8",
+      "license": "MIT",
+      "skills": [
+        { "name": "fixing-accessibility", "path": "skills/fixing-accessibility" },
+        { "name": "fixing-motion-performance", "path": "skills/fixing-motion-performance" }
+      ]
+    },
+    {
+      "repo": "wshobson/agents",
+      "ref": "46891e7e60da0e52baf1050b7b6391b64e84c6d9",
+      "license": "MIT",
+      "skills": [
+        { "name": "screen-reader-testing", "path": "plugins/accessibility-compliance/skills/screen-reader-testing" }
+      ]
+    },
+    {
+      "repo": "emilkowalski/skills",
+      "ref": "e8a175de22ae1e49370fc144c1f3bb9aeedf988d",
+      "license": "MIT",
+      "skills": [
+        { "name": "review-animations", "path": "skills/review-animations" },
+        { "name": "improve-animations", "path": "skills/improve-animations" },
+        { "name": "animate", "path": "skills/animate" }
+      ]
+    },
+    {
+      "repo": "kylezantos/design-motion-principles",
+      "ref": "4a9ca879f24a361f4dca4174fe2da0f67b5ddee3",
+      "license": "MIT",
+      "skills": [
+        { "name": "design-motion-principles", "path": "skills/design-motion-principles" }
+      ]
+    }
+  ],
+  "adapted": [
+    {
+      "repo": "github/awesome-copilot",
+      "ref": "3a685010a7afdc0dbd4c83b7fbda6c316aa516e5",
+      "license": "MIT",
+      "items": [
+        { "name": "csharp-async", "kind": "skill", "change": "None" },
+        { "name": "dotnet-timezone", "kind": "skill", "change": "None" },
+        { "name": "ef-core", "kind": "skill", "change": "Minor edits for .NET 10 projects" },
+        { "name": "csharp-xunit", "kind": "skill", "change": "Minor edits for .NET 10 projects" },
+        { "name": "containerize-aspnetcore", "kind": "skill", "change": ".NET 10 base images as the default" },
+        { "name": "create-architectural-decision-record", "kind": "skill", "change": "None" },
+        { "name": "gdpr-compliant", "kind": "skill", "change": "None" },
+        { "name": "github-actions-hardening", "kind": "skill", "change": "None" },
+        { "name": "create-readme", "kind": "skill", "change": "Converted from a Copilot prompt file to a skill" },
+        { "name": "csharp-expert", "kind": "agent", "change": "Converted to a cross-tool agent; hands off to code-reviewer" },
+        { "name": "janitor", "kind": "agent", "change": "Converted to a cross-tool agent; .NET and Blazor notes added" }
+      ]
+    },
+    {
+      "repo": "anthropics/skills",
+      "ref": "683bc88e56f3e09ba94f7055977f3d3aa499f202",
+      "license": "Apache-2.0",
+      "items": [
+        { "name": "frontend-design", "kind": "skill", "change": "Added a section on applying the guidance through MudBlazor" }
+      ]
+    }
+  ],
+  "companions": [
+    {
+      "name": "impeccable",
+      "repo": "pbakaus/impeccable",
+      "license": "Apache-2.0",
+      "reason": "Ships its own plugin with harness-specific skill variants, agents, hooks and a launcher binary, so it is installed from upstream rather than copied."
+    }
+  ]
+}
