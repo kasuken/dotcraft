@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="140" viewBox="0 0 520 140" role="img" aria-labelledby="title">
+  <title id="title">dotcraft</title>
+  <g transform="translate(14 14)">
+    <rect width="112" height="112" rx="28" fill="#8B6CF6"/>
+    <circle cx="38" cy="76" r="12" fill="#0D1117"/>
+    <path d="M58 88 L80 30" stroke="#0D1117" stroke-width="11" stroke-linecap="round"/>
+    <path d="M90 14 Q90 26 102 26 Q90 26 90 38 Q90 26 78 26 Q90 26 90 14 Z" fill="#0D1117"/>
+  </g>
+  <text x="150" y="94" font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="70" font-weight="700" letter-spacing="-1.5" fill="#F0F6FC">dotcraft</text>
+</svg>
