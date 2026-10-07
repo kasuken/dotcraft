@@ -4,3 +4,7 @@
 *.jpg binary
 *.gif binary
 *.woff2 binary
+
+# Skills are documentation for agents; keep them out of the language statistics.
+skills/** linguist-documentation
+licenses/** linguist-documentation
