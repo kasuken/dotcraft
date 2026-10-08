@@ -71,6 +71,7 @@ try {
         Write-Host "==> $($source.repo) @ $wanted" -ForegroundColor Cyan
 
         Invoke-Git $checkout init -q | Out-Null
+        Invoke-Git $checkout config core.symlinks false | Out-Null
         Invoke-Git $checkout remote add origin "https://github.com/$($source.repo).git" | Out-Null
         Invoke-Git $checkout fetch -q --depth 1 --filter=blob:none origin $wanted | Out-Null
         $sparse = @($source.skills | ForEach-Object { "/$($_.path)/" }) + '/LICENSE*', '/LICENCE*', '/COPYING*'
