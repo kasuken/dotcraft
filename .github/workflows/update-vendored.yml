@@ -1,0 +1,132 @@
+name: Update vendored skills and release
+
+on:
+  schedule:
+    # Cron cannot express a continuous 15-day interval across month boundaries.
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-vendored
+  cancel-in-progress: false
+
+jobs:
+  cadence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      due: ${{ steps.check.outputs.due }}
+    steps:
+      - name: Check the 15-day cadence
+        id: check
+        shell: pwsh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          $anchor = [datetime]::new(2026, 10, 8, 0, 0, 0, [DateTimeKind]::Utc)
+          $days = ([datetime]::UtcNow.Date - $anchor).Days
+          $due = $env:EVENT_NAME -eq 'workflow_dispatch' -or ($days -ge 0 -and $days % 15 -eq 0)
+          "due=$($due.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
+  update:
+    needs: cadence
+    if: needs.cadence.outputs.due == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Sync upstream skills
+        shell: pwsh
+        run: ./scripts/Sync-Vendored.ps1 -Update
+
+      - name: Prepare a patch release if vendored files changed
+        id: release
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git add -- skills licenses vendor.json THIRD-PARTY-NOTICES.md
+          if ($LASTEXITCODE -ne 0) { throw 'Could not stage vendored files.' }
+          git diff --cached --quiet
+          $diffExit = $LASTEXITCODE
+          if ($diffExit -notin 0, 1) { throw 'Could not compare vendored files.' }
+
+          $pluginPath = '.claude-plugin/plugin.json'
+          $marketPath = '.claude-plugin/marketplace.json'
+          $plugin = Get-Content $pluginPath -Raw | ConvertFrom-Json
+          $market = Get-Content $marketPath -Raw | ConvertFrom-Json
+          $entry = @($market.plugins | Where-Object name -eq $plugin.name)
+          if ($entry.Count -ne 1 -or $entry[0].version -ne $plugin.version) {
+              throw 'Plugin and marketplace versions must match.'
+          }
+          if ($plugin.version -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+              throw 'Automatic releases require a stable major.minor.patch version.'
+          }
+
+          $changed = $diffExit -eq 1
+          if ($changed) {
+              $version = "$($Matches[1]).$($Matches[2]).$([long]::Parse($Matches[3]) + 1)"
+              $plugin.version = $version
+              $entry[0].version = $version
+              $plugin | ConvertTo-Json -Depth 10 | Set-Content $pluginPath -Encoding utf8NoBOM
+              $market | ConvertTo-Json -Depth 10 | Set-Content $marketPath -Encoding utf8NoBOM
+              $date = [datetime]::UtcNow.ToString('yyyy-MM-dd')
+              $notes = "## [$version] - $date`n`n### Changed`n`n- Updated vendored skills, upstream commit pins, licences and third-party notices.`n`n"
+              $changelog = (Get-Content CHANGELOG.md -Raw) -replace "`r`n", "`n"
+              if (-not $changelog.StartsWith("# Changelog`n`n")) { throw 'Unexpected changelog heading.' }
+              $changelog = $changelog.Insert("# Changelog`n`n".Length, $notes)
+              Set-Content CHANGELOG.md -Value $changelog -NoNewline -Encoding utf8NoBOM
+          }
+          else {
+              $version = $plugin.version
+          }
+
+          # Recover a release if an earlier run pushed its commit but publishing failed.
+          $subject = git log -1 --format=%s
+          if ($LASTEXITCODE -ne 0) { throw 'Could not read the latest commit.' }
+          $publish = $changed -or $subject -eq "chore: sync vendored skills (v$version)"
+          "changed=$($changed.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "publish=$($publish.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Validate before publishing
+        shell: pwsh
+        run: ./scripts/Test-Plugin.ps1
+
+      - name: Commit updates and publish the GitHub release
+        if: steps.release.outputs.publish == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          VERSION: ${{ steps.release.outputs.version }}
+          CHANGED: ${{ steps.release.outputs.changed }}
+        run: |
+          set -euo pipefail
+          if [[ "$CHANGED" == "true" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -- .claude-plugin/plugin.json .claude-plugin/marketplace.json CHANGELOG.md
+            git commit -m "chore: sync vendored skills (v$VERSION)"
+            git -c credential.helper= \
+              -c 'credential.helper=!f() { printf "%s=%s\n" username x-access-token password "$GH_TOKEN"; }; f' \
+              push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
+          fi
+          if gh release view "v$VERSION" > /dev/null 2>&1; then
+            echo "Release v$VERSION already exists."
+          else
+            gh release create "v$VERSION" \
+              --target "$(git rev-parse HEAD)" \
+              --title "v$VERSION" \
+              --notes 'Updated vendored skills, upstream commit pins, licences and third-party notices. See CHANGELOG.md and THIRD-PARTY-NOTICES.md for details.' \
+              --latest
+          fi

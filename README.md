@@ -271,12 +271,18 @@ scripts/                          sync, export and check scripts (PowerShell 7)
 
 - **One manifest.** Copilot and Codex both read Claude Code's `.claude-plugin` layout, so there is a single source of truth. A root `plugin.json` would change how Copilot loads agents, and the CI check rejects one.
 - **Skills load on demand.** Every tool sees only each skill's name and one-line description until a request needs it; the full instructions and references load only then.
-- **Third-party skills are pinned.** Each comes from a specific upstream commit recorded in [`vendor.json`](vendor.json), copied verbatim with its licence. Updates are a reviewed diff, never a silent change.
+- **Third-party skills are pinned.** Each comes from a specific upstream commit recorded in [`vendor.json`](vendor.json), copied verbatim with its licence. Automated updates are validated, committed and recorded in the changelog.
 - **Agents are written once.** `agents/*.md` serves Claude Code and Copilot; `Export-CodexAgents.ps1` turns them into Codex TOML, and CI fails if the two drift.
 
 ## Maintaining dotcraft
 
 You need PowerShell 7 and Git.
+
+**Automatic updates and releases**: [`Update vendored skills and release`](.github/workflows/update-vendored.yml) runs every 15 days, anchored to 8 October 2026, at approximately 06:23 UTC. A daily schedule checks the interval so it stays at 15 days across month boundaries (unlike `*/15` in a cron day-of-month field). You can also run it immediately from the Actions tab with **Run workflow**.
+
+The workflow runs `Sync-Vendored.ps1 -Update` and `Test-Plugin.ps1`. If vendored files change, it increments the patch version in both plugin manifests, adds a changelog entry, commits to the default branch and publishes a GitHub release tagged `v<version>`. No changes means no new version or release. Re-running after a publishing failure can finish the release when the update commit is still the branch's latest commit.
+
+It uses the built-in `GITHUB_TOKEN` with `contents: write`; no personal access token is needed. Repository rules must allow GitHub Actions to push to the default branch and create release tags. If branch protection requires pull requests, this direct-publishing workflow will fail rather than bypass those rules. GitHub may delay scheduled runs, and disables schedules in inactive public repositories after 60 days; re-enable the workflow if needed. Automated token pushes do not trigger the separate validation workflow, so this workflow runs the same validation before pushing.
 
 **Update third-party skills** to their latest upstream versions, then review the diff:
 
