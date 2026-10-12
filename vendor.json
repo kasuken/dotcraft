@@ -137,6 +137,14 @@
       "skills": [
         { "name": "design-motion-principles", "path": "skills/design-motion-principles" }
       ]
+    },
+    {
+      "repo": "kasuken/seo-agent-skill",
+      "ref": "77af3efb8221cea5d9f919678450dd52e7cbdc67",
+      "license": "MIT",
+      "skills": [
+        { "name": "seo", "path": ".agents/skills/seo" }
+      ]
     }
   ],
   "adapted": [

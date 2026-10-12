@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-10-12
+
+### Added
+
+- **SEO skill** — `seo` from [kasuken/seo-agent-skill](https://github.com/kasuken/seo-agent-skill) audits, implements and troubleshoots Google-focused SEO from Search Central guidance: crawling and indexing, canonicals, sitemaps, JavaScript rendering, structured data, Core Web Vitals, content quality and traffic drops. It is pinned like the other third-party skills and updated by the scheduled sync.
+
 ## [1.0.0] - 2026-10-07
 
 ### Added

@@ -21,10 +21,10 @@
 
 AI coding agents write better .NET when they know how good .NET looks: how a Blazor component should load its data, why a page fetches twice under prerendering, what a MudBlazor theme should own, when an EF Core query will fall over, and what an accessible, well-animated interface needs. dotcraft packages that knowledge as skills and agents, and installs it the same way in Claude Code, GitHub Copilot and Codex, so every tool you open follows the same playbook.
 
-- **53 skills** across C#, EF Core, Blazor, MudBlazor, testing, accessibility, motion, Stripe, GDPR and delivery
+- **54 skills** across C#, EF Core, Blazor, MudBlazor, testing, accessibility, motion, SEO, Stripe, GDPR and delivery
 - **3 agents**: an implementer, a reviewer and a clean-up specialist
 - **2 MCP servers** for current documentation: Microsoft Learn and Context7
-- **Curated, pinned and credited**: 5 skills written for dotcraft, 10 adapted, and 38 from the best sources on [skills.sh](https://skills.sh), including the official .NET, Stripe and Microsoft Aspire skills
+- **Curated, pinned and credited**: 5 skills written for dotcraft, 10 adapted, and 39 pinned from upstream repositories (most of them found on [skills.sh](https://skills.sh)), including the official .NET, Stripe and Microsoft Aspire skills
 
 ## Contents
 
@@ -110,6 +110,7 @@ Skills switch on by themselves when a request matches them. Ask the way you norm
 | "The orders query is slow" | `optimizing-ef-core-queries`, `efcore-patterns` |
 | "Write tests for `TaskRow.razor`" | `bunit-testing` |
 | "Add Stripe subscriptions" | `stripe-best-practices`, `gdpr-compliant` |
+| "Why isn't the pricing page showing up in Google?" | `seo` |
 | "Is this ready to merge?" | `dotnet-validate` and the `code-reviewer` agent |
 | "Cut a release" | `release-changelog` |
 
@@ -195,6 +196,7 @@ To run a skill on purpose, call it by name. In Claude Code that's `/dotcraft:<sk
 |---|---|---|
 | `stripe-best-practices` | Checkout or PaymentIntents, Billing, webhooks, keys and sandboxes | Stripe |
 | `gdpr-compliant` | Privacy by design: data models, logging, retention and deletion | awesome-copilot |
+| `seo` | Google-focused SEO from Search Central guidance: crawling and indexing, canonicals, sitemaps, JavaScript rendering, structured data, Core Web Vitals, content quality and traffic drops | kasuken |
 | `github-actions-hardening` | Reviewing workflows against the Actions threat model | awesome-copilot |
 | `gha-security-review` | Exploitable workflow bugs such as pwn requests and expression injection | Sentry |
 | `create-readme` | A README that is accurate and easy to scan | awesome-copilot |
@@ -307,7 +309,7 @@ It checks the manifests, every skill's name and description against the Agent Sk
 
 ## FAQ
 
-### Won't 53 skills fill up my context?
+### Won't 54 skills fill up my context?
 
 No. Each tool keeps only the name and a short description of every skill in context, which is a few thousand tokens in total. The body of a skill and its reference files load only when a request needs them.
 
@@ -329,6 +331,6 @@ Open an issue here if it's about how dotcraft packages it. If it's about the ski
 
 ## Credits and licence
 
-dotcraft stands on the work of the .NET team ([dotnet/skills](https://github.com/dotnet/skills)), Aaron Stannard ([dotnet-skills](https://github.com/aaronontheweb/dotnet-skills)), [Duende Software](https://github.com/duendesoftware/duende-skills), [Microsoft](https://github.com/microsoft/aspire-skills), [Stripe](https://github.com/stripe/ai), [Sentry](https://github.com/getsentry/skills), [markheydon](https://github.com/markheydon/github-workflows), [Vercel](https://github.com/vercel-labs/agent-skills), [Jakub Krehel](https://github.com/jakubkrehel/skills), [Addy Osmani](https://github.com/addyosmani/web-quality-skills), [ibelick](https://github.com/ibelick/ui-skills), [Seth Hobson](https://github.com/wshobson/agents), [Emil Kowalski](https://github.com/emilkowalski/skills), [kylezantos](https://github.com/kylezantos/design-motion-principles), the [awesome-copilot](https://github.com/github/awesome-copilot) community and [Anthropic](https://github.com/anthropics/skills). Thank you.
+dotcraft stands on the work of the .NET team ([dotnet/skills](https://github.com/dotnet/skills)), Aaron Stannard ([dotnet-skills](https://github.com/aaronontheweb/dotnet-skills)), [Duende Software](https://github.com/duendesoftware/duende-skills), [Microsoft](https://github.com/microsoft/aspire-skills), [Stripe](https://github.com/stripe/ai), [Sentry](https://github.com/getsentry/skills), [markheydon](https://github.com/markheydon/github-workflows), [Vercel](https://github.com/vercel-labs/agent-skills), [Jakub Krehel](https://github.com/jakubkrehel/skills), [Addy Osmani](https://github.com/addyosmani/web-quality-skills), [ibelick](https://github.com/ibelick/ui-skills), [Seth Hobson](https://github.com/wshobson/agents), [Emil Kowalski](https://github.com/emilkowalski/skills), [kylezantos](https://github.com/kylezantos/design-motion-principles), [kasuken](https://github.com/kasuken/seo-agent-skill), the [awesome-copilot](https://github.com/github/awesome-copilot) community and [Anthropic](https://github.com/anthropics/skills). Thank you.
 
 dotcraft's own files are released under the [MIT licence](LICENSE). Third-party skills keep their original licences; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) and [`licenses/`](licenses/).
